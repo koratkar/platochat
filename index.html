@@ -133,6 +133,7 @@
             box-sizing: border-box;
             display: flex;
             gap: 10px;
+            position: sticky;
         }
 
         .message-input input {
@@ -190,6 +191,42 @@
             opacity: 1;
         }
 
+        .view-mode-switch {
+            background-color: #7c7469;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            font-size: 14px;
+        }
+
+        .view-mode-switch:hover {
+            background-color: #8b847a;
+        }
+
+        /* Style for the up arrow button that appears in view mode */
+        .up-arrow-button {
+            background-color: #8b847a;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .up-arrow-button::before {
+            content: "↑";
+            font-size: 25px;
+            font-family: sans-serif;
+        }
+
     </style>
 </head>
 <body>
@@ -200,7 +237,9 @@
             <p>By <a href="https://github.com/koratkar">Ishaan Koratkar</a></p>
             <p>Hit me up on <a href="https://x.com/whybyfire">twitter</a></p>
         </div>
-    </select></center>
+    </select>
+    <button class="view-mode-switch">Toggle View Mode</button>
+    </center>
     <br>
     
     <div class="chat-container">
@@ -244,6 +283,7 @@
                 <option value="philosopher1">Socrates</option>
                 <option value="philosopher2">Plato</option>
             </select>
+            <button class="up-arrow-button"></button>
         </div>
         
     </div>
@@ -253,6 +293,25 @@
         const input = document.querySelector('.message-input input');
         const messages = document.querySelector('.messages');
         const characterSelect = document.getElementById('characterSelect');
+
+        const viewModeSwitch = document.querySelector('.view-mode-switch');
+        const upArrowButton = document.querySelector('.up-arrow-button');
+        
+        viewModeSwitch.addEventListener('click', () => {
+            const isViewMode = characterSelect.style.display === 'none';
+            
+            if (isViewMode) {
+                // Switch to edit mode
+                characterSelect.style.display = 'block';
+                upArrowButton.style.display = 'none';
+                viewModeSwitch.textContent = 'Toggle View Mode';
+            } else {
+                // Switch to view mode
+                characterSelect.style.display = 'none';
+                upArrowButton.style.display = 'flex';
+                viewModeSwitch.textContent = 'Toggle Edit Mode';
+            }
+        });
 
         // Delete message functionality
         function addDeleteButton(container) {
