@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e6e2d3;
+        }
+
+        .chat-container {
+            max-width: 500px;
+            max-height: 1000px;
+            margin: 0 auto;
+            overflow: auto;
+            background-color: #f4f1ea;
+            height: 100vh;
+            position: relative;
+        }
+
+        .chat-header {
+            background-color: #7c7469;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #958b7d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .profile-pic img {
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            display: block;
+        }
+
+        .chat-title {
+            font-size: 1.1em;
+        }
+
+        .chat-members {
+            font-size: 0.9em;
+            color: lightgoldenrodyellow;
+        }
+
+        .character-selector {
+            background-color: #8b847a;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .messages {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 70px;
+            overflow-y: auto;
+            height: calc(100vh - 140px);
+        }
+
+        .message-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            max-width: 80%;
+            position: relative;
+        }
+
+        .message-container.sent {
+            flex-direction: row-reverse;
+            align-self: flex-end;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 15px;
+            position: relative;
+            word-wrap: break-word;
+            min-width: 50px;
+        }
+
+        .message.received {
+            background-color: #d8d4c9;
+        }
+
+        .message.sent {
+            background-color: #a69f8f;
+            color: white;
+        }
+
+        .timestamp {
+            font-size: 0.7em;
+            color: #666;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .message.sent .timestamp {
+            color: #eee;
+        }
+
+        .message-input {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            background-color: #f4f1ea;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #7c7469;
+            border-radius: 20px;
+            background-color: white;
+        }
+
+        .small-profile {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .small-profile img {
+            max-width: 100%;
+            max-height: 100%;
+            background-size: contain;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: -10px;
+            left: auto;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .message-container:hover .delete-button {
+            display: flex;
+        }
+
+        .delete-button:hover {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body>
+    <br>
+    <center>
+        <div class="call-card">
+            <p>Create groupchat memes with Socrates and Plato.</p>
+            <p>By <a href="https://github.com/koratkar">Ishaan Koratkar</a></p>
+            <p>Find me on <a href="https://x.com/whybyfire">twitter</a></p>
+            <p>Favorite memes? Feature ideas? Send them to me! I love making new friends on the internet!</p>
+        </div>
+    </select></center>
+    <br>
+    
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-left">
+                <div class="profile-pic">
+                    <img src="images/groupchat_pfp.png" alt="Group">
+                </div>
+                <div class="chat-title">The Boys</div>
+            </div>
+            <div class="chat-members">Socrates, you, and others</div>
+        </div>
+        
+        <div class="messages">
+            <div class="message-container">
+                <div class="small-profile">
+                    <img src="images/socrates.png" alt="Philosopher 1">
+                </div>
+                <div class="message received" contenteditable="true">
+                    Lmfao last night was wild
+                    <span class="timestamp" contenteditable="true">3:47 AM</span>
+                </div>
+                <button class="delete-button">×</button>
+            </div>
+            
+            <div class="message-container sent">
+                <div class="small-profile">
+                    <img src="images/plato.png" alt="Philosopher 2">
+                </div>
+                <div class="message sent" contenteditable="true">
+                    haha yeah dude
+                    <span class="timestamp" contenteditable="true">3:48 AM</span>
+                </div>
+                <button class="delete-button">×</button>
+            </div>
+        </div>
+
+        <div class="message-input">
+            <input type="text" placeholder="Type a message...">
+            <select class="character-selector" id="characterSelect">
+                <option value="philosopher1">Socrates</option>
+                <option value="philosopher2">Plato</option>
+            </select>
+        </div>
+        
+    </div>
+
+
+    <script>
+        const input = document.querySelector('.message-input input');
+        const messages = document.querySelector('.messages');
+        const characterSelect = document.getElementById('characterSelect');
+
+        // Delete message functionality
+        function addDeleteButton(container) {
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-button';
+            deleteBtn.textContent = '×';
+            deleteBtn.addEventListener('click', () => {
+                container.remove();
+            });
+            container.appendChild(deleteBtn);
+        }
+
+        // Add delete buttons to existing messages
+        document.querySelectorAll('.message-container').forEach(container => {
+            addDeleteButton(container);
+        });
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && input.value.trim()) {
+                const newContainer = document.createElement('div');
+                newContainer.className = 'message-container';
+                
+                if (characterSelect.value === 'philosopher2') {
+                    newContainer.className += ' sent';
+                }
+
+                const profilePic = document.createElement('div');
+                profilePic.className = 'small-profile';
+                const img = document.createElement('img');
+                if (characterSelect.value == "philosopher1") {
+                    img.src = 'images/socrates.png';
+                } else {
+                    img.src = 'images/plato.png';
+                }
+                img.alt = characterSelect.value === 'philosopher1' ? 'Philosopher 1' : 'Philosopher 2';
+                profilePic.appendChild(img);
+
+                const newMessage = document.createElement('div');
+                newMessage.className = `message ${characterSelect.value === 'philosopher2' ? 'sent' : 'received'}`;
+                newMessage.contentEditable = true;
+                
+                const timestamp = document.createElement('span');
+                timestamp.className = 'timestamp';
+                timestamp.contentEditable = true;
+                
+                const now = new Date();
+                timestamp.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                newMessage.textContent = input.value;
+                newMessage.appendChild(timestamp);
+                
+                newContainer.appendChild(profilePic);
+                newContainer.appendChild(newMessage);
+                
+                // Add delete button to new message
+                addDeleteButton(newContainer);
+
+                messages.appendChild(newContainer);
+                input.value = '';
+                
+                newMessage.addEventListener('click', () => {
+                    newMessage.focus();
+                });
+
+                messages.scrollTop = messages.scrollHeight;
+            }
+        });
+
+        // Make messages editable on click
+        document.querySelectorAll('.message').forEach(msg => {
+            msg.addEventListener('click', () => {
+                msg.focus();
+            });
+        });
+    </script>
+</body>
+</html>
