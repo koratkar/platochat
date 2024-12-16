@@ -11,7 +11,7 @@
 
         .chat-container {
             max-width: 500px;
-            max-height: 1000px;
+            max-height: 800px;
             margin: 0 auto;
             overflow: auto;
             background-color: #f4f1ea;
@@ -207,6 +207,40 @@
             background-color: #8b847a;
         }
 
+        .clear-chat-button {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            font-size: 14px;
+        }
+
+        .clear-chat-button:hover {
+            background-color: #ff5252;
+        }
+
+        @media screen and (max-width: 768px) {
+            .chat-container {
+                height: 100vh;
+                max-height: 100vh;
+            }
+
+            .messages {
+                height: calc(100vh - 140px);
+            }
+
+            .message-input {
+                position: fixed;
+                bottom: 0;
+                max-width: 500px;
+                width: 100%;
+            }
+        }
+
         /* Style for the up arrow button that appears in view mode */
         .up-arrow-button {
             background-color: #8b847a;
@@ -239,6 +273,7 @@
         </div>
     </select>
     <button class="view-mode-switch">Toggle View Mode</button>
+    <button class="clear-chat-button">Clear Chat</button>
     </center>
     <br>
     
@@ -296,6 +331,11 @@
 
         const viewModeSwitch = document.querySelector('.view-mode-switch');
         const upArrowButton = document.querySelector('.up-arrow-button');
+
+        const clearChatButton = document.querySelector('.clear-chat-button');
+        clearChatButton.addEventListener('click', () => {
+                messages.innerHTML = '';
+        });
         
         viewModeSwitch.addEventListener('click', () => {
             const isViewMode = characterSelect.style.display === 'none';
