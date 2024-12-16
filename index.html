@@ -10,8 +10,8 @@
         }
 
         .chat-container {
-            max-width: 500px;
-            max-height: 600px;
+            max-width: 520px;
+            max-height: 650px;
             margin: 0 auto;
             overflow: auto;
             background-color: #f4f1ea;
@@ -27,6 +27,7 @@
             align-items: center;
             justify-content: space-between;
             position: sticky;
+            height: 65px;
             top: 0;
             z-index: 999;
         }
@@ -38,8 +39,8 @@
         }
 
         .profile-pic {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background-color: #958b7d;
             display: flex;
@@ -57,7 +58,7 @@
         }
 
         .chat-title {
-            font-size: 1.1em;
+            font-size: 1.3em;
         }
 
         .chat-members {
@@ -127,7 +128,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            max-width: 500px;
+            max-width: 510px;
             background-color: #f4f1ea;
             padding: 15px;
             box-sizing: border-box;
@@ -261,6 +262,75 @@
             font-family: sans-serif;
         }
 
+        .settings-container {
+            position: sticky;
+        }
+
+        /* Add battery styles */
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .battery-container {
+            display: flex;
+            align-items: start;
+            gap: 5px;
+        }
+
+        .battery-button {
+            background-color: #8b847a;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+            font-size: 14px;
+        }
+
+        .battery-button:hover {
+            background-color: #9a9286;
+        }
+
+        .battery-icon {
+            position: relative;
+            width: 40px;
+            height: 20px;
+            position: absolute;
+            padding: 5px;
+            top: 0;
+            right: 0;
+        }
+
+        .battery-level {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: sans-serif;
+            font-size: 10px;
+            z-index: 2;
+        }
+
+        .circle {
+            border-radius: 50%;
+            text-align: center;
+            color: white;
+            padding: 2px;
+            background-color: lightcoral;
+        }
+
+        .chevron {
+            font-size: 40px;
+            position: relative;
+            top: -3px;
+        }
+
     </style>
     <title>Socratic Group Chat</title>
     <link rel="icon" type="image/x-icon" href="images/groupchat_pfp.png">
@@ -268,27 +338,50 @@
 <body>
     <br>
     <center>
-        <div class="call-card">
+         <div class="call-card">
             <p>Create groupchat memes with Socrates and Plato.</p>
             <p>Timestamps and messages editable on click.</p>
             <p>By <a href="https://github.com/koratkar">Ishaan Koratkar</a></p>
             <p>Hit me up on <a href="https://x.com/whybyfire">twitter</a></p>
         </div>
     </select>
-    <button class="view-mode-switch">Toggle View Mode</button>
-    <button class="clear-chat-button">Clear Chat</button>
+    <div class="settings-container">
+        <button class="view-mode-switch">Toggle View Mode</button>
+        <button class="battery-button" id="batteryToggle">Set High Battery</button>
+        <button class="clear-chat-button">Clear Chat</button>
+    </div>
     </center>
     <br>
     
     <div class="chat-container">
         <div class="chat-header">
             <div class="header-left">
+                <div style="display: flex; align-items: center;">
+                    <a class="chevron">‹</a>
+                    <div class="circle">14</div>
+                </div>
                 <div class="profile-pic">
                     <img src="images/groupchat_pfp.png" alt="Group">
                 </div>
-                <div class="chat-title">The Boys</div>
+                <div style="align-items: center;">
+                    <div class="chat-title">The Boys</div>
+                    <div class="chat-members">Socrates, you, and 14 others</div>
+                </div>
+                
             </div>
-            <div class="chat-members">Socrates, you, and others</div>
+            
+            <div class="header-right">
+                <div class="battery-container">
+                    <div class="battery-icon">
+                        <svg width="40" height="20" viewBox="0 0 40 20">
+                            <rect x="2" y="2" width="34" height="16" rx="2" fill="none" stroke="white" stroke-width="2"/>
+                            <rect x="36" y="6" width="2" height="8" fill="white"/>
+                            <rect id="batteryFill" x="4" y="4" width="4.5" height="12" rx="1" fill="rgb(235, 39, 52)"/>
+                        </svg>
+                        <span class="battery-level"></span>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="messages">
@@ -334,6 +427,29 @@
 
         const viewModeSwitch = document.querySelector('.view-mode-switch');
         const upArrowButton = document.querySelector('.up-arrow-button');
+
+        const batteryToggle = document.getElementById('batteryToggle');
+        const batteryFill = document.getElementById('batteryFill');
+        const batteryLevel = document.querySelector('.battery-level');
+        let isLowbattery = true;
+
+        batteryToggle.addEventListener('click', () => {
+            isLowbattery = !isLowbattery;
+            if (isLowbattery) {
+                // Low battery
+                batteryFill.setAttribute('fill', 'rgb(235, 39, 52)');
+                batteryFill.setAttribute('width', '4.5');
+                batteryLevel.style.display = 'none';
+                batteryToggle.textContent = 'Set high battery';
+            } else {
+                // Full battery
+                batteryFill.setAttribute('fill', 'rgb(66, 212, 82)');
+                batteryFill.setAttribute('width', '30');
+                batteryLevel.textContent = '100';
+                batteryLevel.style.display = 'block';
+                batteryToggle.textContent = 'Set low battery (funnier)';
+            }
+        });
 
         const clearChatButton = document.querySelector('.clear-chat-button');
         clearChatButton.addEventListener('click', () => {
